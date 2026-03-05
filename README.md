@@ -1,65 +1,86 @@
-# 🧮 Git 演習プロジェクト — C言語 電卓
- 2人1組 × 複数グループ
+# 🧮 Git 演習 — C言語 電卓プロジェクト
+
+> 2人1組  
+> ゴール：**ブランチ作成 → コミット → main へマージ** を体験する
 
 ---
 
-## 📁 リポジトリ構成
+## 📁 ファイル構成
 
 ```
 calculator/
-├── main.c      
-├── calc.h      
-├── calc.c     
-├── Makefile    
-└── README.md
+├── main.c      ← 触らない（完成済み）
+├── calc.h      ← 触らない（完成済み）
+├── calc.c      ← ✏️ 2人で分担して実装する
+├── Makefile    ← 触らない
+└── README.md   ← このファイル
 ```
 
 ---
 
-## 👩‍🎓 演習手順
+## 🎯 演習の流れ（全体像）
 
-### 🔧 準備
+```
+GitHub Classroom でリポジトリを受け取る（2人で1つ）
+        │
+        ├─ 担当A
+        │   git switch -c feature/add-subtract
+        │   add() と subtract() を実装
+        │   git commit & git push
+        │
+        └─ 担当B
+            git switch -c feature/mul-divide
+            multiply() と divide() を実装
+            git commit & git push
+
+        ↓ 2人とも push できたら
+
+    どちらか1人が main にマージ × 2回
+        │
+        └─ make で全演算が動けば完成 🎉
+```
+
+---
+
+## 演習手順
+
+### 🔧 Step 0 — リポジトリを受け取る
+
+GitHub Classroom の招待リンクを開き、チームに参加します。  
+チームのリポジトリが自動作成されたら：
 
 ```bash
-# リポジトリをクローン
-git clone https://github.com/YOUR_NAME/calculator.git
-cd calculator
-
-# ファイルを確認
-ls
-# Makefile  README.md  calc.c  calc.h  main.c
+git clone https://github.com/<ORG>/<REPO_NAME>.git
+cd <REPO_NAME>
 ```
 
 ---
 
-### 📌 A班の手順 — `add` と `subtract` を実装する
+### 👤 担当A の手順 — `add` と `subtract`
 
 #### 1. ブランチを作る
 
 ```bash
-git switch -c feature/group-A-add-subtract
-git branch
-# * feature/group-A-add-subtract
-#   main
+git switch -c feature/add-subtract
 ```
 
 #### 2. `calc.c` を編集する
 
-`calc.c` を開き、`add()` と `subtract()` の `TODO` 部分を実装します：
+`add()` と `subtract()` の `/* TODO */` を実装します：
 
 ```c
 double add(double a, double b)
 {
-    return a + b;   /* ← ここを実装 */
+    return a + b;  /* ← 実装する */
 }
 
 double subtract(double a, double b)
 {
-    return a - b;   /* ← ここを実装 */
+    return a - b;  /* ← 実装する */
 }
 ```
 
-> B班の `multiply()` と `divide()` は **触らない**こと！
+> ⚠️ `multiply()` と `divide()` は **触らない**こと
 
 #### 3. ビルドして確認
 
@@ -67,43 +88,35 @@ double subtract(double a, double b)
 make
 ./calc
 # 式を入力: 10 + 3
-# 答え: 10 + 3 = 13   ← ✅
+# 答え: 10 + 3 = 13  ✅
 ```
 
-#### 4. コミットする
+#### 4. コミットして push
 
 ```bash
 git add calc.c
-git commit -m "feat: add() と subtract() を実装"
-```
-
-#### 5. GitHub に push する
-
-```bash
-git push -u origin feature/group-A-add-subtract
+git commit -m "feat: add と subtract を実装"
+git push -u origin feature/add-subtract
 ```
 
 ---
 
-### 📌 B班の手順 — `multiply` と `divide` を実装する
+### 👤 担当B の手順 — `multiply` と `divide`
 
 #### 1. ブランチを作る
 
 ```bash
-git switch -c feature/group-B-mul-divide
-git branch
-# * feature/group-B-mul-divide
-#   main
+git switch -c feature/mul-divide
 ```
 
 #### 2. `calc.c` を編集する
 
-`multiply()` と `divide()` の `TODO` 部分を実装します：
+`multiply()` と `divide()` の `/* TODO */` を実装します：
 
 ```c
 double multiply(double a, double b)
 {
-    return a * b;   /* ← ここを実装 */
+    return a * b;  /* ← 実装する */
 }
 
 int divide(double a, double b, double *result)
@@ -116,7 +129,7 @@ int divide(double a, double b, double *result)
 }
 ```
 
-> A班の `add()` と `subtract()` は **触らない**こと！
+> ⚠️ `add()` と `subtract()` は **触らない**こと
 
 #### 3. ビルドして確認
 
@@ -124,83 +137,67 @@ int divide(double a, double b, double *result)
 make
 ./calc
 # 式を入力: 6 * 7
-# 答え: 6 * 7 = 42   ← ✅
+# 答え: 6 * 7 = 42  ✅
 
 ./calc
 # 式を入力: 5 / 0
-# エラー: ゼロで割ることはできません   ← ✅
+# エラー: ゼロで割ることはできません  ✅
 ```
 
-#### 4. コミットする
+#### 4. コミットして push
 
 ```bash
 git add calc.c
-git commit -m "feat: multiply() と divide() を実装（ゼロ除算ガード付き）"
-```
-
-#### 5. GitHub に push する
-
-```bash
-git push -u origin feature/group-B-mul-divide
+git commit -m "feat: multiply と divide を実装（ゼロ除算ガード付き）"
+git push -u origin feature/mul-divide
 ```
 
 ---
 
-### 🔀 代表者がマージする
+### 🤝 2人で行う：main へマージ
 
-両班が push を完了したら、教師が main にマージします。
+両方の push が完了したら、どちらか 1人が以下を実行します。
+
+#### マージ①（担当Aのブランチ）
 
 ```bash
-# 最新の main を取得
 git switch main
-git pull
-
-# A班のブランチをマージ
-git fetch origin feature/group-A-add-subtract
-git merge --no-ff origin/feature/group-A-add-subtract \
-    -m "feat: A班 — add/subtract を main にマージ"
-
-# B班のブランチをマージ
-git fetch origin feature/group-B-mul-divide
-git merge --no-ff origin/feature/group-B-mul-divide \
-    -m "feat: B班 — multiply/divide を main にマージ"
+git pull                                  # 最新の main を取得
+git merge --no-ff feature/add-subtract \
+    -m "feat: add と subtract を main にマージ"
 ```
 
-> ⚠️ **コンフリクトが発生する場合（学習チャンス！）**
->
-> A班とB班が `calc.c` の同じファイルを編集しているため、  
-> 2つ目のマージでコンフリクトが発生することがあります。
->
-> ```
-> <<<<<<< HEAD
->     return a + b;
-> =======
->     return a * b;  ← B班の変更
-> >>>>>>> origin/feature/group-B-mul-divide
-> ```
->
-> **解消手順：**
-> ```bash
-> # 1. エディタで両方の変更を残す形に修正
-> # 2. ステージング
-> git add calc.c
-> # 3. コンフリクト解消コミット
-> git commit -m "fix: A班・B班のコンフリクトを解消"
-> ```
-
-#### マージ後の動作確認
+#### マージ②（担当Bのブランチを取得してマージ）
 
 ```bash
-make
-./calc
-# 式を入力: 3 + 4     → 答え: 7
-# 式を入力: 10 - 3    → 答え: 7
-# 式を入力: 6 * 7     → 答え: 42
-# 式を入力: 15 / 3    → 答え: 5
-# 式を入力: 5 / 0     → エラー: ゼロで割ることはできません
+git fetch origin feature/mul-divide
+git merge --no-ff origin/feature/mul-divide \
+    -m "feat: multiply と divide を main にマージ"
 ```
 
-#### main を push して完成！
+#### ⚠️ コンフリクトが出たら（学習チャンス！）
+
+同じ `calc.c` を2人が編集しているので、2回目のマージでコンフリクトが出ることがあります。
+
+```
+<<<<<<< HEAD
+    return a + b;
+=======
+    return a * b;
+>>>>>>> origin/feature/mul-divide
+```
+
+**解消手順：**
+
+```bash
+# 1. ファイルを開いて <<<, ===, >>> を消し、両方の実装を残す
+# 2. ステージング
+git add calc.c
+# 3. コミット
+git commit -m "fix: コンフリクト解消 — 全演算を統合"
+```
+
+#### 最後に push して完成！
 
 ```bash
 git push origin main
@@ -208,80 +205,58 @@ git push origin main
 
 ---
 
-## 📊 演習フロー図
-
-```
-GitHub (origin/main)
-        │
-        ├── git clone  ← 全員がここから始める
-        │
-        ├── A班
-        │   └── feature/group-A-add-subtract
-        │       ├── add() を実装
-        │       ├── subtract() を実装
-        │       ├── git commit
-        │       └── git push ──────────────────┐
-        │                                       │
-        ├── B班                                 │
-        │   └── feature/group-B-mul-divide      │
-        │       ├── multiply() を実装            │
-        │       ├── divide() を実装              │
-        │       ├── git commit                  │
-        │       └── git push ──────────┐        │
-        │                              ▼        ▼
-        │                    両ブランチを main にマージ
-        │                              │
-        └──────────────────────────────▼
-                          origin/main (完成！🎉)
-```
-
----
-
-## ✅ 採点チェックリスト
-
-| 確認項目 | A班 | B班 |
-|---------|-----|-----|
-| 正しいブランチ名で作業した | ☐ | ☐ |
-| 担当関数だけを編集した | ☐ | ☐ |
-| `make` がエラーなく通る | ☐ | ☐ |
-| コミットメッセージが適切 | ☐ | ☐ |
-| `git push` が成功した | ☐ | ☐ |
-| B班: ゼロ除算でエラーが出る | — | ☐ |
-
----
-
-## 🆘 よくあるトラブル
-
-### `make` でコンパイルエラーが出る
+### ✅ 動作確認（全演算テスト）
 
 ```bash
-calc.c:10:5: error: ...
+make
+./calc   # 10 + 3  → 13
+./calc   # 10 - 3  → 7
+./calc   # 6 * 7   → 42
+./calc   # 15 / 3  → 5
+./calc   # 5 / 0   → エラー: ゼロで割ることはできません
 ```
 
-→ `calc.c` の構文を確認。`;` の付け忘れや `{}` の対応ミスが多いです。
+全部通れば 🎉 **演習完了！**
+
+---
+
+## 🆘 トラブルシューティング
+
+### `make` でエラーが出る
+
+```
+calc.c:10: error: ...
+```
+→ `calc.c` の `{}` や `;` の書き忘れを確認してください。
 
 ### `git push` が拒否される
 
 ```
 ! [rejected] ... (fetch first)
 ```
-
-→ 誰かがすでに push しています。
+→ パートナーがすでに push しています。
 
 ```bash
-git pull --rebase origin feature/group-A-add-subtract
+git pull --rebase origin feature/add-subtract
 git push
 ```
 
-### ブランチを間違えて作業した
+### 間違ったブランチで作業してしまった
 
 ```bash
-# 正しいブランチに移動して、変更を持ち越す
-git stash
-git switch feature/group-A-add-subtract
-git stash pop
+git stash                              # 変更を一時退避
+git switch feature/add-subtract        # 正しいブランチへ
+git stash pop                          # 変更を復元
 ```
 
 ---
 
-*演習リポジトリ — Git Branch/Merge 実践 (C言語 電卓プロジェクト)*
+## 📋 チェックリスト（確認）
+
+- [ ] 担当ブランチ名が正しい（`feature/add-subtract` or `feature/mul-divide`）
+- [ ] 担当の関数だけを実装した（他の関数を触っていない）
+- [ ] `make` がエラーなく通る
+- [ ] コミットメッセージが書いてある
+- [ ] `git push` が成功した
+- [ ] main へのマージが完了した
+- [ ] 全演算（`+ - * /` とゼロ除算）が正しく動く
