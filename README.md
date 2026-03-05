@@ -146,7 +146,7 @@ git push -u origin feature/group-B-mul-divide
 
 ---
 
-### 🔀 教師（または代表者）がマージする
+### 🔀 代表者がマージする
 
 両班が push を完了したら、教師が main にマージします。
 
@@ -229,7 +229,7 @@ GitHub (origin/main)
         │       ├── git commit                  │
         │       └── git push ──────────┐        │
         │                              ▼        ▼
-        │                    教師が両ブランチを main にマージ
+        │                    両ブランチを main にマージ
         │                              │
         └──────────────────────────────▼
                           origin/main (完成！🎉)
